@@ -1,5 +1,5 @@
 {
-    "name": "mamilove/phumbor",
+    "name": "mamilove/libthumbor",
     "description": "A minimal PHP client for generating thumbor URLs",
     "type": "library",
     "require": {
