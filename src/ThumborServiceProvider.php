@@ -30,4 +30,16 @@ class ThumborServiceProvider extends ServiceProvider implements DeferrableProvid
             return new Builder(config('thumbor.host'), config('thumbor.security_key'));
         });
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            'thumbor',
+        ];
+    }
 }
