@@ -1,4 +1,4 @@
-# libthumbor
+# phumbor
 A minimal PHP client for generating Thumbor URLs.
 
 ## Installation
@@ -16,6 +16,6 @@ php artisan vendor:publish --provider="Thumbor\ThumborServiceProvider" --tag=con
 ```php
 use Thumbor\Facades\Thumbor;
 
-$url = (string) Thumbor::url('https://images.mamilove.com.tw/brand/0eb36102e3-1574845513.jpeg')
+$url = (string) Thumbor::url('https://dummyimage.com/600x400.jpg')
     ->resize(100, 100);
 ```
