@@ -195,14 +195,8 @@ class Builder
      */
     public function build(): string
     {
-        $path = implode('/', array_filter([
-            $this->trim,
-            $this->crop,
-            $this->resize,
-            $this->filters ? 'filters:' . implode(':', $this->filters) : '',
-            $this->url,
-        ]));
-
+        $filters = $this->filters ? 'filters:' . implode(':', $this->filters) : '';
+        $path = implode('/', array_filter([$this->trim, $this->crop, $this->resize, $filters, $this->url]));
         $signature = $this->secret ? $this->sign($path) : self::UNSAFE_PATH;
 
         return implode('/', [$this->server, $signature, $path]);
