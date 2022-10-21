@@ -21,7 +21,7 @@ class Builder
     /**
      * The security key to generate a hash-based message authentication code.
      *
-     * @var string|null
+     * @var string
      */
     private $secret;
 
@@ -65,15 +65,17 @@ class Builder
     /**
      * Create a new builder instance.
      *
-     * @param string      $server
-     * @param string|null $secret
+     * @param string $server
+     * @param string $secret
+     * @param string $url
      *
      * @return void
      */
-    public function __construct(string $server, string $secret = null)
+    public function __construct(string $server, string $secret = '', string $url = '')
     {
         $this->server = $server;
         $this->secret = $secret;
+        $this->url = $url;
     }
 
     /**
@@ -183,9 +185,7 @@ class Builder
      */
     public function url(string $url): self
     {
-        $this->url = $url;
-
-        return $this;
+        return new static($this->server, $this->secret, $url);
     }
 
     /**
@@ -203,7 +203,7 @@ class Builder
             $this->url,
         ]));
 
-        $signature = $this->secret ? $this->sign($path, $this->secret) : self::UNSAFE_PATH;
+        $signature = $this->secret ? $this->sign($path) : self::UNSAFE_PATH;
 
         return implode('/', [$this->server, $signature, $path]);
     }
@@ -212,13 +212,12 @@ class Builder
      * Generate a signature for image URL with the security key.
      *
      * @param string $data
-     * @param string $secret
      *
      * @return string
      */
-    private function sign(string $data, string $secret): string
+    private function sign(string $data): string
     {
-        return strtr(base64_encode(hash_hmac('sha1', $data, $secret, true)), '/+', '_-');
+        return strtr(base64_encode(hash_hmac('sha1', $data, $this->secret, true)), '/+', '_-');
     }
 
     /**
