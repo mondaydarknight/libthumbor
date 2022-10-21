@@ -18,8 +18,7 @@ class BuilderTest extends TestCase
      */
     public function testBuildImageUrl(string $server, string $secret, string $url, array $options, string $expected_url)
     {
-        $builder = new Builder($server, $secret);
-        $builder->url($url);
+        $builder = (new Builder($server, $secret))->url($url);
 
         foreach ($options as $option => $args) {
             $builder->{$option}(...$args);
